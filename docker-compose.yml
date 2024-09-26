@@ -1,0 +1,84 @@
+# version: "3"
+
+# services:
+#   twitter-api-app:
+#     container_name: twitter-api-container
+#     ports:
+#       - "4000:4000" # hostPort:containerPort
+#     env_file: # here i can use .env file and reach all vars inside it
+#       - ./.env
+#     depends_on:
+#       - db
+#       - phpmyadmin
+
+#   db:
+#     image: mysql:5.7
+#     container_name: db
+#     environment:
+#       MYSQL_ROOT_PASSWORD: password
+#       MYSQL_DATABASE: root
+#       MYSQL_USER: admin
+#       MYSQL_PASSWORD: password
+#     restart: always
+#     ports:
+#       - '8886:3306'
+#     volumes:
+#       - dbdata:/var/lib/mysql
+  
+#   phpmyadmin:
+#     image: phpmyadmin/phpmyadmin
+#     container_name: pma
+#     links:
+#       - db
+#     environment:
+#       PMA_HOST: db
+#       PMA_PORT: 3306
+#     restart: always
+#     ports:
+#       - '8899:80'
+
+# volumes:
+#   dbdata:
+
+
+version: '3'
+
+services:
+  # twitter-api-app:
+  #   container_name: twitter-api-container
+  #   ports:
+  #     - '4000:4000' # hostPort:containerPort
+  #   env_file: # here i can use .env file and reach all vars inside it
+  #     - ./.env
+  #   depends_on:
+  #     - db
+  #     - phpmyadmin
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+    restart: always
+    ports:
+      - '8886:3306'
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    restart: always
+    ports:
+      - '8899:80'
+
+volumes:
+  dbdata:
