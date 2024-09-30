@@ -24,8 +24,8 @@ export class UserService {
     return await this.userRepo.find();
   }
 
-  async findOne(id: number) {
-    return await this.userRepo.findOneBy({ id });
+  async findOne(username: string) {
+    return await this.userRepo.findOneBy({ username });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -33,7 +33,7 @@ export class UserService {
     if (!userToUpdate) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    const updateduser = await this.userRepo.update(id, updateUserDto);
+    await this.userRepo.update(id, updateUserDto);
     return this.userRepo.findOneBy({ id });
   }
 
