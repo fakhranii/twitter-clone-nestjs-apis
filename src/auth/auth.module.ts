@@ -4,10 +4,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { UserModule } from 'src/user/user.module';
 import * as dotenv from 'dotenv';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/user/entities/user.entity';
 dotenv.config();
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([User]),
     UserModule,
     JwtModule.register({
       global: true,
