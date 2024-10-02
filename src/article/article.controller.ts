@@ -1,15 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+  Req,
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
-@Controller('article')
+@Controller('api/v1/article')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articleService.create(createArticleDto);
+  create(@Request() req, @Body() createArticleDto: CreateArticleDto) {
+    return this.articleService.createArticle(createArticleDto, req);
   }
 
   @Get()
@@ -17,18 +30,30 @@ export class ArticleController {
     return this.articleService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.articleService.findOne(+id);
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  profileContent(@Request() req) {
+    return this.articleService.profileContent(req);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
-    return this.articleService.update(+id, updateArticleDto);
+  @Get(':slug')
+  findOne(@Param('slug') slug: string) {
+    return this.articleService.findOne(slug);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.articleService.remove(+id);
+  @UseGuards(AuthGuard)
+  @Patch(':slug')
+  update(
+    @Request() req,
+    @Param('slug') slug: string,
+    @Body() updateArticleDto: UpdateArticleDto,
+  ) {
+    return this.articleService.update(req, slug, updateArticleDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete(':slug')
+  remove(@Request() req, @Param('slug') slug: string) {
+    return this.articleService.remove(req, slug);
   }
 }

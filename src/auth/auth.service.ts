@@ -12,30 +12,27 @@ import { Repository } from 'typeorm';
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepo: Repository<User>,
-    private userService: UserService,
-    private jwtService: JwtService,
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async signUp(
     createUserDto: CreateUserDto,
-  ): Promise<{ user: User; access_token: string }> {
+  ): Promise<{ user: User; token: string }> {
     const user = await this.userService.createUser(createUserDto);
     const payload = { id: user.id, username: user.username };
     delete user.password;
     return {
       user,
-      access_token: await this.jwtService.signAsync(payload),
+      token: await this.jwtService.signAsync(payload),
     };
   }
 
-  async signIn(
-    signInDTo: SignInDTo,
-  ): Promise<{ user: User; access_token: string }> {
+  async signIn(signInDTo: SignInDTo): Promise<{ user: User; token: string }> {
     const user = await this.userRepo.findOne({
       where: { username: signInDTo.username },
       select: ['id', 'password', 'username'],
     });
-    console.log(user);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -48,7 +45,7 @@ export class AuthService {
       delete user.password;
       return {
         user,
-        access_token: await this.jwtService.signAsync(payload),
+        token: await this.jwtService.signAsync(payload),
       };
     }
   }

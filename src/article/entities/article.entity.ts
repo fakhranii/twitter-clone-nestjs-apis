@@ -1,11 +1,15 @@
 // import { Comment } from 'src/comment/entities/comment.entity';
 // import { User } from 'src/user/entities/user.entity';
+import slugify from 'slugify';
+import { User } from 'src/user/entities/user.entity';
 import {
+  BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
-//   ManyToOne,
-//   OneToMany,
+  ManyToOne,
+  //   ManyToOne,
+  //   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -32,8 +36,8 @@ export class Article {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  @Column('simple-array') // this means that inside we will provide some values as an array
-  tagList: string[];
+  @Column('simple-array', { nullable: true })
+  tagList: string[] = [];
 
   @Column({ default: 0 })
   favoritesCount: number;
@@ -41,12 +45,42 @@ export class Article {
   //   @OneToMany(() => Comment, (comment) => comment.article)
   //   comments: Comment[];
 
-  //   @ManyToOne(() => User, (user) => user.articles, { eager: true })
-  //   //? eager : true -> this option means that we will always load automatically this relation (author for our article)
-  //   author: User; // first argument is the field name, it's not always should be the same name of entity class
+  @ManyToOne(() => User, (user) => user.articles)
+  //? eager : true -> this option means that we will always load automatically this relation (author for our article)
+  author: User; // first argument is the field name, it's not always should be the same name of entity class
 
   @BeforeUpdate()
   updateTimestamp() {
     this.updatedAt = new Date();
+  }
+
+  // @BeforeInsert()
+  // async getSlug(): Promise<any> {
+  //   try {
+  //     this.slug = slugify(
+  //       this.title,
+  //       { lower: true } + '-',
+  //       // ((Math.random() * Math.pow(36, 6)) | 0).toString(36),
+  //     );
+  //   } catch (e) {
+  //     return 'there is an error with slugify';
+  //   }
+  // }
+
+  @BeforeInsert()
+  async getSlug(): Promise<any> {
+    try {
+      // Generate a random 5-digit number
+      const randomString = Math.floor(Math.random() * 100000).toString();
+
+      // Slugify the title and append the random string
+      this.slug =
+        slugify(this.title, {
+          lower: true, // Convert to lowercase
+          strict: true, // Remove special characters
+        }) + randomString;
+    } catch (e) {
+      return 'there is an error with slugify';
+    }
   }
 }

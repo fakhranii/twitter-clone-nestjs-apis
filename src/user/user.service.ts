@@ -28,6 +28,10 @@ export class UserService {
     return await this.userRepo.findOneBy({ username });
   }
 
+  async findById(id: number) {
+    return await this.userRepo.findOneBy({ id });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const userToUpdate = await this.userRepo.findOneBy({ id });
     if (!userToUpdate) {

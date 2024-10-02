@@ -1,0 +1,928 @@
+{
+	"info": {
+		"_postman_id": "73bc26f5-ac91-4e4b-acc7-083a2bb5dc37",
+		"name": "twitter-clone-nestjs-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31885780",
+		"_collection_link": "https://gold-water-721915.postman.co/workspace/Public-Collections~899f080b-3a13-42d0-895e-553e15ff281c/collection/31885780-73bc26f5-ac91-4e4b-acc7-083a2bb5dc37?action=share&source=collection_link&creator=31885780"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"username\" : \"ziad\",\r\n        \"email\": \"ziad@gmail.com\",\r\n        \"password\": \"ziad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/sign-up",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ziad\",\r\n    \"password\": \"ziad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/sign-in",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Articles",
+			"item": [
+				{
+					"name": "Create Article",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMTM0OTc1Mn0.gzSrVoCto_uuJugTIf2urESOBUikV-i-WiBPKtOFTk0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"title\": \"the new one\",\r\n        \"description\": \"kjendnkqjwandkajnns\",\r\n        \"tagList\": [\"eslam\", \"alo\", \"deda\"],\r\n        \"body\": \"zia zia zia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user's article - profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMTM0OTc1Mn0.gzSrVoCto_uuJugTIf2urESOBUikV-i-WiBPKtOFTk0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"title\": \"how to train your zrzr\",\r\n        \"description\": \"kjendnkqjwandkajnns\",\r\n        \"tagList\": [\"eslam\", \"alo\", \"deda\"],\r\n        \"body\": \"zia zia zia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update article",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aSIsImVtYWlsIjoiemlhZEBnbWFpbC5jb20iLCJpYXQiOjE2OTk3MDE5MDN9._gjNwn9QAJnFvuvhlnMpHt0w9cENj2JyHfav6nppLRY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"article\": {\r\n        \"title\": \"how to train your dragon\",\r\n        \"description\": \"Ever wonder How>\",\r\n        \"body\": \"you have to belive\",\r\n        \"tagList\": [\"reactjs\", \"nestjs\", \"ts\"]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete article",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InppYWQiLCJzdWIiOjEsImlhdCI6MTcwMzgyMjMzMiwiZXhwIjoxNzAzOTEyMzMyfQ.CGBcBJB_TUWtlEUAAL6bGti2sbFVm9H9WZEHbyvv5D4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aSIsImVtYWlsIjoiemlhZEBnbWFpbC5jb20iLCJpYXQiOjE2OTk3MDE5MDN9._gjNwn9QAJnFvuvhlnMpHt0w9cENj2JyHfav6nppLRY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"article\": {\r\n        \"title\": \"how to train your dragon\",\r\n        \"description\": \"Ever wonder How>\",\r\n        \"body\": \"you have to belive\",\r\n        \"tagList\": [\"reactjs\", \"nestjs\", \"ts\"]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article/how-to-train-your-zrzr-sg50k0",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article",
+								"how-to-train-your-zrzr-sg50k0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Single Article",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InppYWQiLCJzdWIiOjEsImlhdCI6MTcwMzc3ODE2MiwiZXhwIjoxNzAzODY4MTYyfQ.wP0_EnDuAd84aVWzcGhmQjw2VsY-T3CvCZ4EwaFFXbw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDUyMDY3OX0.CZRazjXbTyJMK8fQ3kYl0AwX565cIwOg409a62xDuRY",
+								"type": "text"
+							},
+							{
+								"key": "limit",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"articles\": {\r\n        \"title\": \"how to train your dragon\",\r\n        \"description\": \"Ever wonder How>\",\r\n        \"body\": \"you have to belive\",\r\n        \"tagList\": [\"reactjs\", \"nestjs\", \"ts\"]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article/how-to-train-your-zrzr-704961",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article",
+								"how-to-train-your-zrzr-704961"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All articles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InppYWQiLCJzdWIiOjEsImlhdCI6MTcwMzc5MTM0OCwiZXhwIjoxNzAzODgxMzQ4fQ.-JbiKx6b8frgjikusQyLrWSoMzN3MwwJ7jPV0HhINt8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDUyMDY3OX0.CZRazjXbTyJMK8fQ3kYl0AwX565cIwOg409a62xDuRY",
+								"type": "text"
+							},
+							{
+								"key": "limit",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"articles\": {\r\n        \"title\": \"how to train your dragon\",\r\n        \"description\": \"Ever wonder How>\",\r\n        \"body\": \"you have to belive\",\r\n        \"tagList\": [\"reactjs\", \"nestjs\", \"ts\"]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like articles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiemlhZCIsImlhdCI6MTcwMTk3MDY0NywiZXhwIjoxNzAxOTgxNzg3fQ.oQt45_-Us2fa7ytdNRy4Mjq6apWHYhSNfn31usrmTsA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDUyMDY3OX0.CZRazjXbTyJMK8fQ3kYl0AwX565cIwOg409a62xDuRY",
+								"type": "text"
+							},
+							{
+								"key": "limit",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article/how-to-train-your-zrzr-g00pl6",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article",
+								"how-to-train-your-zrzr-g00pl6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dislike articles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDUyMDY3OX0.CZRazjXbTyJMK8fQ3kYl0AwX565cIwOg409a62xDuRY",
+								"type": "text"
+							},
+							{
+								"key": "limit",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/article/how-to-train-your-mind-x8jl0e/favorite",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"article",
+								"how-to-train-your-mind-x8jl0e",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Current user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiemlhZCIsImlhdCI6MTcwMTk3MTE1NSwiZXhwIjoxNzAxOTgyMjk1fQ.WDtg-3rywelp_LzV81AI16gFZ1oPZSk4bqT3_Cpus3c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJuYW1lIjoienJ6ciIsImVtYWlsIjoienJ6ckBnbWFpbC5jb20iLCJpYXQiOjE2OTkyODcwMDZ9.HPbtoQ_ARMPlzrqCAocqy9N_dZUbUUHqZK7Za8Qm_Joffd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"articles\": {\r\n        \"title\": \"how to train your dragon\",\r\n        \"description\": \"Ever wonder How>\",\r\n        \"body\": \"you have to belive\",\r\n        \"tagList\": [\"reactjs\", \"nestjs\", \"ts\"]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/users/ali",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"ali"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiemlhZCIsImlhdCI6MTcwMTYwNTUzOCwiZXhwIjoxNzAxNjA1NTk4fQ.3DRDWa56x7nABCOzCCAZrYwEYk5my7ReDS-WJMyVOjU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiemlhZCIsImlhdCI6MTcwMTYwNTMyNCwiZXhwIjoxNzAxNjA1Mzg0fQ.nP_pp58EpS191uOXzUkSeGzRblDivUgsA6qdt8v80vU",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"mama@gmail.com\",\r\n        \"password\": \"zr\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJuYW1lIjoienJ6ciIsImVtYWlsIjoienJ6ckBnbWFpbC5jb20iLCJpYXQiOjE2OTkyODcwMDZ9.HPbtoQ_ARMPlzrqCAocqy9N_dZUbUUHqZK7Za8Qm_Joffd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"articles\": {\r\n        \"title\": \"how to train your dragon\",\r\n        \"description\": \"Ever wonder How>\",\r\n        \"body\": \"you have to belive\",\r\n        \"tagList\": [\"reactjs\", \"nestjs\", \"ts\"]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Delete comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Inplem8iLCJpYXQiOjE3MDI1ODY0ODMsImV4cCI6MTcwMjY3NjQ4M30.vvAUX4X799dTw4XH6QKDxBX6ls28qzTgrJ6hmRjuGiQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"text\": \"test two 11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/comments/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comments",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYWEiLCJpYXQiOjE3MDI2MzkzNjMsImV4cCI6MTcwMjcyOTM2M30.TU7zAFGG02GQtzG20j_NtFlrCXXIE2mOM8aKoA3iobk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"text\": \"update\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/comments/12",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comments",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "publish comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InpyenIiLCJzdWIiOjIsImlhdCI6MTcwMzc4NDU5MCwiZXhwIjoxNzAzODc0NTkwfQ.SWoFtMu5o0ydauJoJ1OBDjRGmpPMBiWh0Xrgg0S9SWY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"text\": \"zrzr comment1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/comments/how-to-train-your-zrzr-fcehbj",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comments",
+								"how-to-train-your-zrzr-fcehbj"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Follow profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDg2MzE5OX0.pH3BuJvgr-KKAXE5um_zrIB9JDLpX0mpZmrqJvjIp_s",
+								"type": "text"
+							},
+							{
+								"key": "limit",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/profiles/eslam/follow",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profiles",
+								"eslam",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unfollow profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDUyMDY3OX0.CZRazjXbTyJMK8fQ3kYl0AwX565cIwOg409a62xDuRY",
+								"type": "text"
+							},
+							{
+								"key": "limit",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/profiles/:username/unfollow",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profiles",
+								":username",
+								"unfollow"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current feed",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDg3MDYyMX0.VtKHhHrqI4nyKY3_pFfnKGwTI65WLblgPoPhneCMAOE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/articles/feed",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"articles",
+								"feed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImVzcmFhIiwiaWF0IjoxNzAyNTYwMTEwLCJleHAiOjE3MDI2NTAxMTB9.jBuTim_MkLEyPd6xO9qzgyP6XrHYdch8nDET9iSOEdM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"text\": \"test two 11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

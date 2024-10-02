@@ -10,6 +10,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Article } from 'src/article/entities/article.entity';
 // import { InternalServerErrorException } from '@nestjs/common';
 
 @Entity({ name: 'users' })
@@ -36,8 +37,8 @@ export class User {
   //   @OneToMany(() => Comment, (comment) => comment.user)
   //   comments: Comment[];
 
-  //   @OneToMany(() => Article, (article) => article.author)
-  //   articles: Article[];
+  @OneToMany(() => Article, (article) => article.author)
+  articles: Article[];
 
   //   @ManyToMany(() => Article)
   //   @JoinTable()
