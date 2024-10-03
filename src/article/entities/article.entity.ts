@@ -46,7 +46,6 @@ export class Article {
   //   comments: Comment[];
 
   @ManyToOne(() => User, (user) => user.articles)
-  //? eager : true -> this option means that we will always load automatically this relation (author for our article)
   author: User; // first argument is the field name, it's not always should be the same name of entity class
 
   @BeforeUpdate()
@@ -54,26 +53,10 @@ export class Article {
     this.updatedAt = new Date();
   }
 
-  // @BeforeInsert()
-  // async getSlug(): Promise<any> {
-  //   try {
-  //     this.slug = slugify(
-  //       this.title,
-  //       { lower: true } + '-',
-  //       // ((Math.random() * Math.pow(36, 6)) | 0).toString(36),
-  //     );
-  //   } catch (e) {
-  //     return 'there is an error with slugify';
-  //   }
-  // }
-
   @BeforeInsert()
   async getSlug(): Promise<any> {
     try {
-      // Generate a random 5-digit number
       const randomString = Math.floor(Math.random() * 100000).toString();
-
-      // Slugify the title and append the random string
       this.slug =
         slugify(this.title, {
           lower: true, // Convert to lowercase

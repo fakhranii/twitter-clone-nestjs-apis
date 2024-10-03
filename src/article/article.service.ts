@@ -5,6 +5,7 @@ import { UserService } from 'src/user/user.service';
 import { Article } from './entities/article.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class ArticleService {
@@ -12,13 +13,14 @@ export class ArticleService {
     private readonly userSrv: UserService,
     @InjectRepository(Article)
     private readonly articleRepo: Repository<Article>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
 
   async createArticle(
     createArticleDto: CreateArticleDto,
-    req: any,
+    userReq: any,
   ): Promise<Article> {
-    const user = await this.userSrv.findById(req.user.id);
+    const user = await this.userSrv.findById(userReq.id);
     const article = new Article();
     Object.assign(article, createArticleDto);
     article.author = user;
@@ -30,9 +32,9 @@ export class ArticleService {
     return await this.articleRepo.find();
   }
 
-  async profileContent(req: any): Promise<Article[]> {
+  async profileContent(userReq: any): Promise<Article[]> {
     return await this.articleRepo.find({
-      where: { author: { id: req.user.id } },
+      where: { author: { id: userReq.id } },
     });
   }
 
@@ -41,11 +43,11 @@ export class ArticleService {
   }
 
   async update(
-    req: any,
+    userReq: any,
     slug: string,
     updateArticleDto: UpdateArticleDto,
   ): Promise<Article> {
-    const user = await this.userSrv.findById(req.user.id);
+    const user = await this.userSrv.findById(userReq.id);
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
     }
@@ -57,8 +59,8 @@ export class ArticleService {
     return await this.articleRepo.save(article);
   }
 
-  async remove(req: any, slug: string): Promise<DeleteResult> {
-    const user = await this.userSrv.findById(req.user.id);
+  async remove(userReq: any, slug: string): Promise<DeleteResult> {
+    const user = await this.userSrv.findById(userReq.id);
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
     }
@@ -66,6 +68,39 @@ export class ArticleService {
     if (!article) {
       throw new HttpException('Article Not Found', HttpStatus.NOT_FOUND);
     }
-    return await this.articleRepo.delete(article.id);
+    return this.articleRepo.delete(article.id);
+  }
+
+  async addArticleToFavorites(userReq: any, slug: string): Promise<Article> {
+    const user = await this.userSrv.findById(userReq.id);
+    if (!user) {
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    }
+    const article = await this.articleRepo.findOneBy({ slug });
+    if (!article) {
+      throw new HttpException('Article Not Found', HttpStatus.NOT_FOUND);
+    }
+    user.favorites.push(article);
+    article.favoritesCount++;
+    await this.userRepo.save(user);
+    return this.articleRepo.save(article);
+  }
+
+  async removeArticleFromFavorites(
+    userReq: any,
+    slug: string,
+  ): Promise<Article> {
+    const user = await this.userSrv.findById(userReq.id);
+    if (!user) {
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    }
+    const article = await this.articleRepo.findOneBy({ slug });
+    if (!article) {
+      throw new HttpException('Article Not Found', HttpStatus.NOT_FOUND);
+    }
+    user.favorites = user.favorites.filter((fav) => fav.id !== article.id);
+    article.favoritesCount--;
+    await this.userRepo.save(user);
+    return this.articleRepo.save(article);
   }
 }

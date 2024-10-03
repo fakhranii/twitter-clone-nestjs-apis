@@ -14,6 +14,7 @@ import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { Article } from './entities/article.entity';
 
 @Controller('api/v1/article')
 export class ArticleController {
@@ -22,7 +23,7 @@ export class ArticleController {
   @UseGuards(AuthGuard)
   @Post()
   create(@Request() req, @Body() createArticleDto: CreateArticleDto) {
-    return this.articleService.createArticle(createArticleDto, req);
+    return this.articleService.createArticle(createArticleDto, req.user);
   }
 
   @Get()
@@ -33,7 +34,7 @@ export class ArticleController {
   @UseGuards(AuthGuard)
   @Get('profile')
   profileContent(@Request() req) {
-    return this.articleService.profileContent(req);
+    return this.articleService.profileContent(req.user);
   }
 
   @Get(':slug')
@@ -48,12 +49,26 @@ export class ArticleController {
     @Param('slug') slug: string,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
-    return this.articleService.update(req, slug, updateArticleDto);
+    return this.articleService.update(req.user, slug, updateArticleDto);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':slug')
   remove(@Request() req, @Param('slug') slug: string) {
-    return this.articleService.remove(req, slug);
+    return this.articleService.remove(req.user, slug);
+  }
+
+  async addArticleToFavorites(
+    @Request() req,
+    @Param('slug') slug: string,
+  ): Promise<Article> {
+    return this.articleService.addArticleToFavorites(req.user, slug);
+  }
+
+  async removeArticleFromFavorites(
+    @Request() req,
+    @Param('slug') slug: string,
+  ): Promise<Article> {
+    return this.articleService.removeArticleFromFavorites(req.user, slug);
   }
 }
