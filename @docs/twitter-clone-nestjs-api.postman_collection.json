@@ -29,7 +29,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"username\" : \"ziad\",\r\n        \"email\": \"ziad@gmail.com\",\r\n        \"password\": \"ziad\"\r\n}",
+							"raw": "{\r\n        \"username\" : \"mostafa\",\r\n        \"email\": \"mostafa@gmail.com\",\r\n        \"password\": \"mostafa\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"ziad\",\r\n    \"password\": \"ziad\"\r\n}",
+							"raw": "{\r\n    \"username\": \"ali\",\r\n    \"password\": \"ali\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -240,7 +240,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InppYWQiLCJzdWIiOjEsImlhdCI6MTcwMzgyMjMzMiwiZXhwIjoxNzAzOTEyMzMyfQ.CGBcBJB_TUWtlEUAAL6bGti2sbFVm9H9WZEHbyvv5D4",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -263,7 +263,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/article/how-to-train-your-zrzr-sg50k0",
+							"raw": "localhost:3000/api/v1/article/how-to-train-your-zrzr83743",
 							"host": [
 								"localhost"
 							],
@@ -272,7 +272,7 @@
 								"api",
 								"v1",
 								"article",
-								"how-to-train-your-zrzr-sg50k0"
+								"how-to-train-your-zrzr83743"
 							]
 						}
 					},
@@ -757,7 +757,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -786,14 +786,16 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/profiles/eslam/follow",
+							"raw": "localhost:3000/api/v1/profile/ziad/follow",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"profiles",
-								"eslam",
+								"api",
+								"v1",
+								"profile",
+								"ziad",
 								"follow"
 							]
 						}
@@ -808,7 +810,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -837,29 +839,35 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/profiles/:username/unfollow",
+							"raw": "localhost:3000/api/v1/profile/ahmed/un-follow",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"profiles",
-								":username",
-								"unfollow"
-							],
-							"variable": [
-								{
-									"key": "username",
-									"value": ""
-								}
+								"api",
+								"v1",
+								"profile",
+								"ahmed",
+								"un-follow"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get current feed",
+					"name": "news-feed",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -869,21 +877,60 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:3000/articles/feed",
+							"raw": "localhost:3000/api/v1/profile/news-feed",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"articles",
-								"feed"
+								"api",
+								"v1",
+								"profile",
+								"news-feed"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "profile",
+					"name": "specific friend feed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6aWFkIiwiZW1haWwiOiJ6aWFkQGdtYWlsLmNvbSIsImlhdCI6MTcwMDg3MDYyMX0.VtKHhHrqI4nyKY3_pFfnKGwTI65WLblgPoPhneCMAOE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/profile/news-feed",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"profile",
+								"news-feed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my profile",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -893,7 +940,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImVzcmFhIiwiaWF0IjoxNzAyNTYwMTEwLCJleHAiOjE3MDI2NTAxMTB9.jBuTim_MkLEyPd6xO9qzgyP6XrHYdch8nDET9iSOEdM",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -902,7 +949,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"text\": \"test two 11\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -910,13 +957,16 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/profile",
+							"raw": "localhost:3000/api/v1/profile/my-profile",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"profile"
+								"api",
+								"v1",
+								"profile",
+								"my-profile"
 							]
 						}
 					},

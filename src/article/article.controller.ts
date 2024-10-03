@@ -31,12 +31,6 @@ export class ArticleController {
     return this.articleService.findAll();
   }
 
-  @UseGuards(AuthGuard)
-  @Get('profile')
-  profileContent(@Request() req) {
-    return this.articleService.profileContent(req.user);
-  }
-
   @Get(':slug')
   findOne(@Param('slug') slug: string) {
     return this.articleService.findOne(slug);

@@ -32,12 +32,6 @@ export class ArticleService {
     return await this.articleRepo.find();
   }
 
-  async profileContent(userReq: any): Promise<Article[]> {
-    return await this.articleRepo.find({
-      where: { author: { id: userReq.id } },
-    });
-  }
-
   async findOne(slug: string): Promise<Article> {
     return await this.articleRepo.findOneBy({ slug });
   }
@@ -59,7 +53,7 @@ export class ArticleService {
     return await this.articleRepo.save(article);
   }
 
-  async remove(userReq: any, slug: string): Promise<DeleteResult> {
+  async remove(userReq: any, slug: string): Promise<any> {
     const user = await this.userSrv.findById(userReq.id);
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
@@ -68,7 +62,7 @@ export class ArticleService {
     if (!article) {
       throw new HttpException('Article Not Found', HttpStatus.NOT_FOUND);
     }
-    return this.articleRepo.delete(article.id);
+    return this.articleRepo.remove(article);
   }
 
   async addArticleToFavorites(userReq: any, slug: string): Promise<Article> {
