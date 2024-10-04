@@ -52,6 +52,8 @@ export class ArticleController {
     return this.articleService.remove(req.user, slug);
   }
 
+  @UseGuards(AuthGuard)
+  @Post('/:slug/favorite')
   async addArticleToFavorites(
     @Request() req,
     @Param('slug') slug: string,
@@ -59,6 +61,8 @@ export class ArticleController {
     return this.articleService.addArticleToFavorites(req.user, slug);
   }
 
+  @UseGuards(AuthGuard)
+  @Delete(':slug/favorite')
   async removeArticleFromFavorites(
     @Request() req,
     @Param('slug') slug: string,

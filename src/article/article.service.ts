@@ -29,7 +29,7 @@ export class ArticleService {
 
   async findAll(): Promise<Article[]> {
     // TODO : I need to apply Pagination here
-    return await this.articleRepo.find();
+    return await this.articleRepo.find({ relations: ['author'] });
   }
 
   async findOne(slug: string): Promise<Article> {
@@ -65,17 +65,56 @@ export class ArticleService {
     return this.articleRepo.remove(article);
   }
 
+  // async addArticleToFavorites(userReq: any, slug: string): Promise<Article> {
+  //   const user = await this.userRepo.findOne({
+  //     where: { id: userReq.id },
+  //     relations: ['favorites'],
+  //   });
+  //   if (!user) {
+  //     throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+  //   }
+  //   const article = await this.articleRepo.findOneBy({ slug });
+  //   if (!article) {
+  //     throw new HttpException('Article Not Found', HttpStatus.NOT_FOUND);
+  //   }
+  //   user.favorites.push(article);
+  //   article.favoritesCount++;
+  //   await this.userRepo.save(user);
+  //   return this.articleRepo.save(article);
+  // }
+
   async addArticleToFavorites(userReq: any, slug: string): Promise<Article> {
-    const user = await this.userSrv.findById(userReq.id);
+    const user = await this.userRepo.findOne({
+      where: { id: userReq.id },
+      relations: ['favorites'],
+    }); // Ensure favorites are loaded
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
     }
-    const article = await this.articleRepo.findOneBy({ slug });
+
+    const article = await this.articleRepo.findOne({
+      where: { slug },
+    });
+    console.log(article);
     if (!article) {
       throw new HttpException('Article Not Found', HttpStatus.NOT_FOUND);
     }
-    user.favorites.push(article);
-    article.favoritesCount++;
+
+    // Initialize the favorites array if it is not initialized
+    if (!user.favorites) {
+      user.favorites = [];
+    }
+
+    // Add the article to favorites if it's not already there
+    const isAlreadyFavorited = user.favorites.find(
+      (fav) => fav.id === article.id,
+    );
+    if (!isAlreadyFavorited) {
+      user.favorites.push(article);
+      article.favoritesCount++;
+    }
+
+    // Save the updated user and article
     await this.userRepo.save(user);
     return this.articleRepo.save(article);
   }
@@ -92,6 +131,11 @@ export class ArticleService {
     if (!article) {
       throw new HttpException('Article Not Found', HttpStatus.NOT_FOUND);
     }
+
+    if (!user.favorites) {
+      user.favorites = [];
+    }
+
     user.favorites = user.favorites.filter((fav) => fav.id !== article.id);
     article.favoritesCount--;
     await this.userRepo.save(user);
