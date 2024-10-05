@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import {
   BeforeInsert,
   Column,
@@ -7,11 +6,10 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
-  ManyToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Article } from 'src/article/entities/article.entity';
-// import { InternalServerErrorException } from '@nestjs/common';
+import { Comment } from 'src/comment/entities/comment.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -30,12 +28,11 @@ export class User {
   @Column({ unique: true })
   username: string;
 
-  // @Exclude()
   @Column({ select: false }) //* it means that in our all requests, by default we're not selecting the password field
   password: string;
 
-  //   @OneToMany(() => Comment, (comment) => comment.user)
-  //   comments: Comment[];
+  @OneToMany(() => Comment, (comment) => comment.commentCreator)
+  comments: Comment[];
 
   @OneToMany(() => Article, (article) => article.author)
   articles: Article[];

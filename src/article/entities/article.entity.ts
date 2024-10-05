@@ -1,5 +1,4 @@
-// import { Comment } from 'src/comment/entities/comment.entity';
-// import { User } from 'src/user/entities/user.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
 import slugify from 'slugify';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -8,8 +7,7 @@ import {
   Column,
   Entity,
   ManyToOne,
-  //   ManyToOne,
-  //   OneToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -42,8 +40,11 @@ export class Article {
   @Column({ default: 0 })
   favoritesCount: number;
 
-  //   @OneToMany(() => Comment, (comment) => comment.article)
-  //   comments: Comment[];
+  @Column({ default: 0 })
+  commentCount: number;
+
+  @OneToMany(() => Comment, (comment) => comment.article)
+  comments: Comment[];
 
   @ManyToOne(() => User, (user) => user.articles)
   author: User; // first argument is the field name, it's not always should be the same name of entity class
