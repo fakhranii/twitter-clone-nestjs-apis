@@ -75,14 +75,22 @@ export class CommentService {
     const comment = await this.commentRepo.findOne({
       where: {
         id: commentId,
-        commentCreator: user,
-        article: article,
+        // commentCreator: user,
+        // article: article,
       },
+      relations: ['commentCreator'],
     });
 
     if (!comment) {
       throw new HttpException(
         'Comment not found or you do not have permission to edit this comment',
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
+
+    if (comment.commentCreator.id !== user.id) {
+      throw new HttpException(
+        'You do not have permission to edit this comment',
         HttpStatus.NOT_ACCEPTABLE,
       );
     }
@@ -104,7 +112,7 @@ export class CommentService {
     if (!user) {
       throw new HttpException(`User Not Found`, HttpStatus.NOT_FOUND);
     }
-  
+
     const article = await this.articleRepo.findOne({
       where: {
         slug: slug,
@@ -114,25 +122,31 @@ export class CommentService {
     if (!article) {
       throw new HttpException(`Article Not Found`, HttpStatus.NOT_FOUND);
     }
-  
+
     const comment = await this.commentRepo.findOne({
       where: {
         id: commentId,
-        commentCreator: user,
-        article: article,
+        // commentCreator: user,
+        // article: article,
       },
+      relations: ['commentCreator'],
     });
-  
+
     if (!comment) {
       throw new HttpException(
         'Comment not found or you do not have permission to delete this comment',
         HttpStatus.NOT_ACCEPTABLE,
       );
     }
-  
+    if (comment.commentCreator.id !== user.id) {
+      throw new HttpException(
+        'You do not have permission to edit this comment',
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
+
     await this.commentRepo.remove(comment);
-  
+
     return { message: 'Comment deleted successfully' };
   }
-  
 }

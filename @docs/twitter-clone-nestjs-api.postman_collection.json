@@ -74,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"ali\",\r\n    \"password\": \"ali\"\r\n}",
+							"raw": "{\r\n    \"username\": \"ziad\",\r\n    \"password\": \"ziad\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -125,7 +125,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"title\": \"the new one\",\r\n        \"description\": \"kjendnkqjwandkajnns\",\r\n        \"tagList\": [\"eslam\", \"alo\", \"deda\"],\r\n        \"body\": \"zia zia zia\"\r\n}",
+							"raw": "{\r\n        \"title\": \"the fifth article\",\r\n        \"description\": \"this is a description for the article\",\r\n        \"tagList\": [\"eslam\", \"alo\", \"deda\"],\r\n        \"body\": \"zia zia zia\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -396,7 +396,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiemlhZCIsImlhdCI6MTcwMTk3MDY0NywiZXhwIjoxNzAxOTgxNzg3fQ.oQt45_-Us2fa7ytdNRy4Mjq6apWHYhSNfn31usrmTsA",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -425,7 +425,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/article/how-to-train-your-zrzr-g00pl6",
+							"raw": "localhost:3000/api/v1/article/the-third-article43003/favorite/",
 							"host": [
 								"localhost"
 							],
@@ -434,7 +434,9 @@
 								"api",
 								"v1",
 								"article",
-								"how-to-train-your-zrzr-g00pl6"
+								"the-third-article43003",
+								"favorite",
+								""
 							]
 						}
 					},
@@ -448,7 +450,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -477,7 +479,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/article/how-to-train-your-mind-x8jl0e/favorite",
+							"raw": "localhost:3000/api/v1/article/the-third-article43003/favorite",
 							"host": [
 								"localhost"
 							],
@@ -486,7 +488,7 @@
 								"api",
 								"v1",
 								"article",
-								"how-to-train-your-mind-x8jl0e",
+								"the-third-article43003",
 								"favorite"
 							]
 						}
@@ -613,13 +615,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users",
+							"raw": "localhost:3000/api/v1/user",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"users"
+								"api",
+								"v1",
+								"user"
 							]
 						}
 					},
@@ -638,7 +642,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Inplem8iLCJpYXQiOjE3MDI1ODY0ODMsImV4cCI6MTcwMjY3NjQ4M30.vvAUX4X799dTw4XH6QKDxBX6ls28qzTgrJ6hmRjuGiQ",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -655,14 +659,17 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/comments/3",
+							"raw": "localhost:3000/api/v1/comment/the-second-article59330/10",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"comments",
-								"3"
+								"api",
+								"v1",
+								"comment",
+								"the-second-article59330",
+								"10"
 							]
 						}
 					},
@@ -676,7 +683,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYWEiLCJpYXQiOjE3MDI2MzkzNjMsImV4cCI6MTcwMjcyOTM2M30.TU7zAFGG02GQtzG20j_NtFlrCXXIE2mOM8aKoA3iobk",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -685,7 +692,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"text\": \"update\"\r\n}",
+							"raw": "{\r\n        \"body\": \"id is 14\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -693,14 +700,17 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/comments/12",
+							"raw": "localhost:3000/api/v1/comment/the-second-article59330/10",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"comments",
-								"12"
+								"api",
+								"v1",
+								"comment",
+								"the-second-article59330",
+								"10"
 							]
 						}
 					},
@@ -714,7 +724,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InpyenIiLCJzdWIiOjIsImlhdCI6MTcwMzc4NDU5MCwiZXhwIjoxNzAzODc0NTkwfQ.SWoFtMu5o0ydauJoJ1OBDjRGmpPMBiWh0Xrgg0S9SWY",
+									"value": "{{JWT}}",
 									"type": "string"
 								}
 							]
@@ -723,7 +733,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"text\": \"zrzr comment1\"\r\n}",
+							"raw": "{\r\n        \"body\": \"let's see 2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -731,14 +741,16 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/comments/how-to-train-your-zrzr-fcehbj",
+							"raw": "localhost:3000/api/v1/comment/the-second-article59330",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"comments",
-								"how-to-train-your-zrzr-fcehbj"
+								"api",
+								"v1",
+								"comment",
+								"the-second-article59330"
 							]
 						}
 					},
